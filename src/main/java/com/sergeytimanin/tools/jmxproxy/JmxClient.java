@@ -48,29 +48,33 @@ class JmxStuff {
 		ObjectName mbeanName = new ObjectName(objectName);
 
 //		System.out.println(mbeanName);
-		
-		
-		Object returnedObject = mbsc.getAttribute(mbeanName, attributeName);
-		
-		Object printObj = new Object();
-        if (itemName != null && itemName != "" && returnedObject instanceof CompositeDataSupport) {
-            CompositeData compositeDataObject = (CompositeData) returnedObject;
-            printObj = compositeDataObject.get(itemName);
-//            return compositeDataObject.get(itemName);
-        } else {
-        	printObj = returnedObject;
-//            return returnedObject;
-        }
-
-		
-		System.out.println(objectName + "," + attributeName + " == " + printObj);
-		
-//		CompositeData cd = (CompositeData) o;
-//		System.out.println(cd.get("committed"));
-
-		
-		jmxc.close();
-		
+			
+		try {
+			Object returnedObject = mbsc.getAttribute(mbeanName, attributeName);
+			
+			Object printObj = new Object();
+	        if (itemName != null && itemName != "" && returnedObject instanceof CompositeDataSupport) {
+	            CompositeData compositeDataObject = (CompositeData) returnedObject;
+	            printObj = compositeDataObject.get(itemName);
+	//            return compositeDataObject.get(itemName);
+	        } else {
+	        	printObj = returnedObject;
+	//            return returnedObject;
+	        }
+	
+			
+			System.out.println(objectName + "," + attributeName + " == " + printObj);
+			
+	//		CompositeData cd = (CompositeData) o;
+	//		System.out.println(cd.get("committed"));
+		}
+		catch (Exception exc) {
+			System.out.println("Error:");
+			throw exc;
+		}
+		finally {
+			jmxc.close();
+		}
 	}
 
 }
