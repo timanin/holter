@@ -2,3 +2,5 @@
 *.class
 
 tmp
+
+.gradle
