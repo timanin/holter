@@ -25,8 +25,16 @@ public class JmxClient {
 		if (args.length == 4) { 
 			itemName  = args[3];
 		}
-			
+		
+		JmxStuff jmx = new JmxStuff();
+		jmx.getJmxItem(jmxUrl, objectName, attributeName, itemName);
 				
+	}
+}
+
+class JmxStuff {
+	
+	public void getJmxItem(String jmxUrl, String objectName, String attributeName, String itemName) throws Exception {
 		// creating an RMI connector client to allow the JMX client to interact
 		// with the JMX agent as if they were running on the same machine
 		System.out.println("Creating a connection to: " + jmxUrl);
@@ -62,6 +70,7 @@ public class JmxClient {
 
 		
 		jmxc.close();
+		
 	}
 
 }
