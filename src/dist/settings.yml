@@ -14,7 +14,7 @@ server:
 logging:
 
   # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
-  level: INFO
+  level: WARN
 
   # Logger-specific levels.
   loggers:
@@ -26,7 +26,7 @@ logging:
 
   appenders:
     - type: console
-      threshold: ALL
+      threshold: WARN
       timeZone: UTC
       target: stdout
       logFormat: # TODO

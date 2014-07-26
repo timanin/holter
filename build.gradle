@@ -8,8 +8,10 @@ targetCompatibility = '1.7'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-mainClassName = 'com.sergeytimanin.tools.jmxproxy.JmxClientApplication'
+mainClassName = 'com.sergeytimanin.holter.JmxClientApplication'
 
+group = 'com.sergeytimanin'
+//name = 'holter'
 version = '0.2'
 
 buildscript {

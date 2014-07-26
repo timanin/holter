@@ -1,4 +1,4 @@
-package com.sergeytimanin.tools.jmxproxy;
+package com.sergeytimanin.holter;
 
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;

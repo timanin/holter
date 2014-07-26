@@ -1,9 +1,9 @@
-package com.sergeytimanin.tools.jmxproxy;
+package com.sergeytimanin.holter;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import com.sergeytimanin.tools.jmxproxy.resources.JmxClientResource;
+import com.sergeytimanin.tools.jmxproxy.resources.*;
 import com.sergeytimanin.tools.jmxproxy.health.TemplateHealthCheck;
 
 public class JmxClientApplication extends Application<JmxClientConfiguration> {
@@ -14,7 +14,7 @@ public class JmxClientApplication extends Application<JmxClientConfiguration> {
 
 	@Override
 	public String getName() {
-		return "hello-world";
+		return "test-app-name";
 	}
 
 	@Override
@@ -28,10 +28,15 @@ public class JmxClientApplication extends Application<JmxClientConfiguration> {
 				configuration.getTemplate(),
 				configuration.getDefaultName()
 				);
+		final JmxClientResource2 resource2 = new JmxClientResource2(
+				configuration.getTemplate(),
+				configuration.getDefaultName()
+				);
 		final TemplateHealthCheck healthCheck =
 				new TemplateHealthCheck(configuration.getTemplate());
 		environment.healthChecks().register("template", healthCheck);
 		environment.jersey().register(resource);
+		environment.jersey().register(resource2);
 	}
 
 }

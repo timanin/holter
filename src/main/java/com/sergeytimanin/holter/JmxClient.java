@@ -1,4 +1,4 @@
-package com.sergeytimanin.tools.jmxproxy;
+package com.sergeytimanin.holter;
 
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
