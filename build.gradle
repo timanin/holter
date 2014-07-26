@@ -26,7 +26,7 @@ project.ext {
     dropwizardVersion = '0.7.0'
 }
 
-task oneJar(type: OneJar) {
+task fatJar(type: OneJar) {
 	mainClass = mainClassName
 }
 
@@ -43,17 +43,19 @@ test {
     systemProperties 'property': 'value'
 }
 
-uploadArchives {
-    repositories {
-       flatDir {
-           dirs 'repos'
-       }
-    }
-}
+// not essential:
+//uploadArchives {
+//    repositories {
+//       flatDir {
+//           dirs 'repos'
+//       }
+//    }
+//}
 
-run {
-	args 'server', 'src/dist/settings.yml'
-}
+// not essential:
+//run {
+//	args 'server', 'src/dist/settings.yml'
+//}
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '1.12'
@@ -63,6 +65,12 @@ def configFile = file('src/dist/settings.yml')
 def scriptFile = file('src/dist/start.sh')
 
 artifacts {
-	jar
-	configFile
+	archives fatJar
+	archives configFile
+	archives scriptFile
 }
+
+// not essential:
+//applicationDistribution.from("src/dist/") {
+//    into "conf"
+//}
