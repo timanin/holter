@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'gradle-one-jar'
+apply plugin: 'maven'
 //apply plugin: 'eclipse'
 
 sourceCompatibility = '1.7'
@@ -45,14 +46,11 @@ test {
     systemProperties 'property': 'value'
 }
 
-// not essential:
-//uploadArchives {
-//    repositories {
-//       flatDir {
-//           dirs 'repos'
-//       }
-//    }
-//}
+uploadArchives {
+    repositories.mavenDeployer {
+		repository(url: "file://repos")
+    }
+}
 
 // not essential:
 //run {
