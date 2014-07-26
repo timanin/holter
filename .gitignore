@@ -5,3 +5,5 @@ bin
 build
 .gradle
 repos
+
+.classpath
