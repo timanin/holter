@@ -1,4 +1,4 @@
-package com.sergeytimanin.tools.jmxproxy.core;
+package com.sergeytimanin.holter.core;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;

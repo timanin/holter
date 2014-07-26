@@ -3,8 +3,9 @@ package com.sergeytimanin.holter;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import com.sergeytimanin.tools.jmxproxy.resources.*;
-import com.sergeytimanin.tools.jmxproxy.health.TemplateHealthCheck;
+
+import com.sergeytimanin.holter.health.TemplateHealthCheck;
+import com.sergeytimanin.holter.resources.*;
 
 public class JmxClientApplication extends Application<JmxClientConfiguration> {
 

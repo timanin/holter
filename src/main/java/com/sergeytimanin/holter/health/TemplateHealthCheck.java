@@ -1,4 +1,4 @@
-package com.sergeytimanin.tools.jmxproxy.health;
+package com.sergeytimanin.holter.health;
 
 import com.codahale.metrics.health.HealthCheck;
 
