@@ -11,22 +11,20 @@ server:
     - type: http
       port: 8083
 
-logging:
-
-  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
-  level: WARN
-
-  # Logger-specific levels.
-  loggers:
-
-    # Sets the level for 'com.example.app' to DEBUG.
-    com.sergeytimanin.tools.jmxproxy: DEBUG
-
-    #org.hibernate.SQL: ALL
-
-  appenders:
-    - type: console
-      threshold: WARN
-      timeZone: UTC
-      target: stdout
-      logFormat: # TODO
+##logging:
+##  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+##  level: WARN
+##
+##  # Logger-specific levels.
+##  loggers:
+##    # Sets the level for 'com.example.app' to DEBUG.
+##    com.sergeytimanin.holter: DEBUG
+##
+##    #org.hibernate.SQL: ALL
+##
+##  appenders:
+##    - type: console
+##      threshold: WARN
+##      timeZone: UTC
+##      target: stdout
+##      logFormat: # TODO
