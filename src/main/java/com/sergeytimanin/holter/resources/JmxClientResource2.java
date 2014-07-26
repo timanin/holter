@@ -1,6 +1,6 @@
 package com.sergeytimanin.holter.resources;
 
-import com.sergeytimanin.holter.core.Saying;
+import com.sergeytimanin.holter.api.Saying;
 import com.google.common.base.Optional;
 import com.codahale.metrics.annotation.Timed;
 

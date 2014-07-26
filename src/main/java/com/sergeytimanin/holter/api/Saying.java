@@ -1,4 +1,4 @@
-package com.sergeytimanin.holter.core;
+package com.sergeytimanin.holter.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
