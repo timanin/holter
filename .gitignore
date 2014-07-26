@@ -1,7 +1,7 @@
-*.class
 tmp
+*.class
+.classpath
+bin
 build
 .gradle
 repos
-bin
-.classpath
