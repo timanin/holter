@@ -1,4 +1,4 @@
-package com.sergeytimanin.holter;
+package com.sergeytimanin.holter.core;
 
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
