@@ -12,14 +12,14 @@ import javax.ws.rs.core.MediaType;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Path("/test")
+@Path("/hello-world")
 @Produces(MediaType.APPLICATION_JSON)
-public class JmxClientResource2 {
+public class HolterResource {
     private final String template;
     private final String defaultName;
     private final AtomicLong counter;
 
-    public JmxClientResource2(String template, String defaultName) {
+    public HolterResource(String template, String defaultName) {
         this.template = template;
         this.defaultName = defaultName;
         this.counter = new AtomicLong();

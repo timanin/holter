@@ -7,25 +7,25 @@ import io.dropwizard.setup.Environment;
 import com.sergeytimanin.holter.health.TemplateHealthCheck;
 import com.sergeytimanin.holter.resources.*;
 
-public class JmxClientApplication extends Application<JmxClientConfiguration> {
+public class HolterApplication extends Application<HolterConfiguration> {
 
 	public static void main(String[] args) throws Exception {
-		new JmxClientApplication().run(args);
+		new HolterApplication().run(args);
 	}
 
 	@Override
 	public String getName() {
-		return "test-app-name";
+		return "Holter";
 	}
 
 	@Override
-	public void initialize(Bootstrap<JmxClientConfiguration> bootstrap) {
+	public void initialize(Bootstrap<HolterConfiguration> bootstrap) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void run(JmxClientConfiguration configuration, Environment environment) throws Exception {
-		final JmxClientResource resource = new JmxClientResource(
+	public void run(HolterConfiguration configuration, Environment environment) throws Exception {
+		final HolterResource resource = new HolterResource(
 				configuration.getTemplate(),
 				configuration.getDefaultName()
 				);
