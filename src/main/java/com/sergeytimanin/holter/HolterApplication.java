@@ -33,7 +33,6 @@ public class HolterApplication extends Application<HolterConfiguration> {
 				new TemplateHealthCheck(configuration.getTemplate());
 		environment.healthChecks().register("template", healthCheck);
 		environment.jersey().register(resource);
-		environment.jersey().register(resource2);
 	}
 
 }
