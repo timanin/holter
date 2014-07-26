@@ -29,10 +29,6 @@ public class HolterApplication extends Application<HolterConfiguration> {
 				configuration.getTemplate(),
 				configuration.getDefaultName()
 				);
-		final JmxClientResource2 resource2 = new JmxClientResource2(
-				configuration.getTemplate(),
-				configuration.getDefaultName()
-				);
 		final TemplateHealthCheck healthCheck =
 				new TemplateHealthCheck(configuration.getTemplate());
 		environment.healthChecks().register("template", healthCheck);
