@@ -1,4 +1,17 @@
-jmx-proxy
-=========
+## Holter
 
-Simple JMX client application to query remote JMX
+RESTful JMX proxy powered by the Dropwizard.
+
+### Building
+
+Run
+
+```bash
+./gradlew build
+```
+
+### Starting
+
+```bash
+java -Done-jar.silent=true -jar holter-0.2-standalone.jar server path/to/settings.yml
+```
