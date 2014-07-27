@@ -1,6 +1,5 @@
 tmp
 *.class
-.classpath
 bin
 build
 .gradle
