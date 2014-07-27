@@ -9,11 +9,10 @@ targetCompatibility = '1.7'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-mainClassName = 'com.sergeytimanin.holter.JmxClientApplication'
+mainClassName = 'com.sergeytimanin.holter.HolterApplication'
 
 group = 'com.sergeytimanin'
-//name = 'holter'
-version = '0.2'
+version = '0.3'
 
 buildscript {
 	repositories {
@@ -54,10 +53,9 @@ uploadArchives {
     }
 }
 
-// not essential:
-//run {
-//	args 'server', 'src/dist/settings.yml'
-//}
+run {
+	args 'server', 'src/dist/settings.yml'
+}
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '1.12'
