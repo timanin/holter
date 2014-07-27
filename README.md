@@ -2,15 +2,13 @@
 
 RESTful JMX proxy powered by the Dropwizard.
 
-### Building
-
-Run
+## Building
 
 ```bash
 ./gradlew build
 ```
 
-### Starting
+## Starting
 
 ```bash
 java -Done-jar.silent=true -jar holter-0.2-standalone.jar server path/to/settings.yml
