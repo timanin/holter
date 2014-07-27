@@ -74,3 +74,11 @@ artifacts {
 //applicationDistribution.from("src/dist/") {
 //    into "conf"
 //}
+
+task dist(type:Zip){
+	from fatJar.outputs.getFiles().getFiles()
+	from configFile
+	from scriptFile
+}
+
+println fatJar.outputs.getFiles().getFiles().dump()
