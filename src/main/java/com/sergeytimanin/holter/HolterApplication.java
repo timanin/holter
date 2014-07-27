@@ -25,14 +25,12 @@ public class HolterApplication extends Application<HolterConfiguration> {
 
 	@Override
 	public void run(HolterConfiguration configuration, Environment environment) throws Exception {
-		final HolterResource resource = new HolterResource(
-				configuration.getTemplate(),
-				configuration.getDefaultName()
-				);
 		final TemplateHealthCheck healthCheck =
 				new TemplateHealthCheck(configuration.getTemplate());
 		environment.healthChecks().register("template", healthCheck);
-		environment.jersey().register(resource);
-	}
+		
+		final RetrieveItemResource getItemPlain = new RetrieveItemResource();
+		environment.jersey().register(getItemPlain);
+}
 
 }

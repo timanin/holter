@@ -1,80 +1,98 @@
 package com.sergeytimanin.holter.core;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
 import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.CompositeDataSupport;
+import javax.management.openmbean.InvalidKeyException;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class JmxClient {
+	private static Logger logger;
 
-	public static void main(String[] args) throws Exception {
-		
-		// check the number of arguments
-		if (args.length < 3) {
-			System.out.println("Usage: java com.sergeytimanin.tools.jmxproxy.JmxClient URL ObjectName AttributeName");
-			System.exit(0);
-		}
-		
-		String jmxUrl        = args[0];
-		String objectName    = args[1];
-		String attributeName = args[2];
-		String itemName	     = null;
-		if (args.length == 4) { 
-			itemName  = args[3];
-		}
-		
-		JmxStuff jmx = new JmxStuff();
-		jmx.getJmxItem(jmxUrl, objectName, attributeName, itemName);
-				
+	public JmxClient() {
+		logger = LoggerFactory
+				.getLogger("com.sergeytimanin.holter.core.JmxClient");
+		logger.info("Logger is starting. JmxClient is created.");
 	}
-}
 
-class JmxStuff {
-	
-	public void getJmxItem(String jmxUrl, String objectName, String attributeName, String itemName) throws Exception {
-		// creating an RMI connector client to allow the JMX client to interact
-		// with the JMX agent as if they were running on the same machine
-		System.out.println("Creating a connection to: " + jmxUrl);
-		JMXServiceURL url = new JMXServiceURL(jmxUrl);
-		JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
+	public Object getJmxItem(String serviceUrl, String objectName,
+			String attributeName) throws AttributeNotFoundException,
+			MBeanException, MalformedObjectNameException,
+			InstanceNotFoundException, MalformedURLException, IOException,
+			Exception {
 
-		// Get an MBeanServerConnection
-		MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
-		
-		// Construct the ObjectName
-		ObjectName mbeanName = new ObjectName(objectName);
+		try (JMXConnector jmxc = JMXConnectorFactory.connect(new JMXServiceURL(
+				serviceUrl), null)) {
 
-//		System.out.println(mbeanName);
-			
-		try {
+			MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
+
+			ObjectName mbeanName = new ObjectName(objectName);
+
 			Object returnedObject = mbsc.getAttribute(mbeanName, attributeName);
-			
-			Object printObj = new Object();
-	        if (itemName != null && itemName != "" && returnedObject instanceof CompositeDataSupport) {
-	            CompositeData compositeDataObject = (CompositeData) returnedObject;
-	            printObj = compositeDataObject.get(itemName);
-	//            return compositeDataObject.get(itemName);
-	        } else {
-	        	printObj = returnedObject;
-	//            return returnedObject;
-	        }
-	
-			
-			System.out.println(objectName + "," + attributeName + " == " + printObj);
-			
-	//		CompositeData cd = (CompositeData) o;
-	//		System.out.println(cd.get("committed"));
-		}
-		catch (Exception exc) {
-			System.out.println("Error:");
-			throw exc;
-		}
-		finally {
-			jmxc.close();
+
+			if (returnedObject instanceof CompositeDataSupport) {
+				CompositeData compositeDataObject = (CompositeData) returnedObject;
+				return compositeDataObject.values().toString();
+			} else {
+				return returnedObject;
+			}
+		} catch (Exception exc) {
+			logger.error("Exception caught: " + exc.getMessage());
+			return exc.getMessage();
 		}
 	}
 
+	public Object getJmxItem(String serviceUrl, String objectName,
+			String attributeName, String itemName) throws InvalidKeyException,
+			AttributeNotFoundException, MBeanException,
+			MalformedObjectNameException, InstanceNotFoundException,
+			MalformedURLException, IOException, Exception {
+
+		try (JMXConnector jmxc = JMXConnectorFactory.connect(new JMXServiceURL(
+				serviceUrl), null)) {
+
+			MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
+
+			ObjectName mbeanName = new ObjectName(objectName);
+
+			Object returnedObject = mbsc.getAttribute(mbeanName, attributeName);
+
+			if (returnedObject instanceof CompositeDataSupport) {
+				// logger.error("item name info:");
+				// if (itemName.isEmpty()) {
+				// logger.error("item name is empty");
+				// }
+				// if (itemName == "") {
+				// logger.error("item name == \"\"");
+				// }
+				// logger.error("item name length is " + itemName.length());
+
+				CompositeData compositeDataObject = (CompositeData) returnedObject;
+
+				if (!itemName.isEmpty()) {
+					return compositeDataObject.get(itemName);
+				} else {
+					return compositeDataObject.values().toString();
+				}
+			} else {
+				return returnedObject;
+			}
+		} catch (Exception exc) {
+			logger.error("Exception caught: " + exc.getMessage());
+			return exc.getMessage();
+		}
+	}
 }
