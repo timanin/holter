@@ -25,7 +25,7 @@ public class JmxClient {
 	public JmxClient() {
 		logger = LoggerFactory
 				.getLogger("com.sergeytimanin.holter.core.JmxClient");
-		logger.info("Logger is starting. JmxClient is created.");
+		logger.trace("Logger is starting. JmxClient is created.");
 	}
 
 	public Object getJmxItem(String serviceUrl, String objectName,

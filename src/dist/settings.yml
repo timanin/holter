@@ -16,3 +16,8 @@ logging:
       threshold: WARN
       timeZone: UTC
       target: stdout
+    - type: file
+      currentLogFilename: ../logs/holter.log
+      archivedLogFilenamePattern: ../logs/holter-%d.log.gz
+      archivedFileCount: 5
+      timeZone: UTC

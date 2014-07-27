@@ -1,15 +1,12 @@
 apply plugin: 'java'
-apply plugin: 'application'
 apply plugin: 'gradle-one-jar'
 apply plugin: 'maven'
-//apply plugin: 'eclipse'
+apply plugin: 'distribution'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
-mainClassName = 'com.sergeytimanin.holter.HolterApplication'
 
 group = 'com.sergeytimanin'
 version = '0.3'
@@ -27,6 +24,7 @@ buildscript {
 project.ext {
     dropwizardVersion = '0.7.0'
 	rabbitmqVersion = '3.3.4'
+	mainClassName = 'com.sergeytimanin.holter.HolterApplication'
 }
 
 repositories {
@@ -47,16 +45,6 @@ task fatJar(type: OneJar) {
 //    systemProperties 'property': 'value'
 //}
 
-uploadArchives {
-    repositories.mavenDeployer {
-		repository(url: "file://repos")
-    }
-}
-
-run {
-	args 'server', 'src/dist/settings.yml'
-}
-
 task wrapper(type: Wrapper) {
 	gradleVersion = '1.12'
 }
@@ -64,21 +52,17 @@ task wrapper(type: Wrapper) {
 def configFile = file('src/dist/settings.yml')
 def scriptFile = file('src/dist/start.sh')
 
-artifacts {
-	archives fatJar
-	archives configFile
-	archives scriptFile
+distributions {
+    main {
+        contents {
+            into('bin') {
+                from scriptFile
+				from fatJar.outputs
+                fileMode = 0755
+            }
+			into('conf') {
+				from configFile
+			}
+        }
+    }
 }
-
-// not essential:
-//applicationDistribution.from("src/dist/") {
-//    into "conf"
-//}
-
-task dist(type:Zip){
-	from fatJar.outputs.getFiles().getFiles()
-	from configFile
-	from scriptFile
-}
-
-println fatJar.outputs.getFiles().getFiles().dump()
