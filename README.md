@@ -2,6 +2,8 @@
 
 RESTful JMX proxy powered by the Dropwizard.
 
+[![Build Status](https://drone.io/github.com/timanin/holter/status.png)](https://drone.io/github.com/timanin/holter/latest)
+
 ## Building
 
 ```bash
