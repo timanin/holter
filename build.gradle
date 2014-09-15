@@ -19,7 +19,6 @@ buildscript {
 
 project.ext {
 	dropwizardVersion = '0.7.0'
-	//	rabbitmqVersion = '3.3.4'
 	mainClassName = 'com.sergeytimanin.holter.HolterApplication'
 }
 
@@ -27,18 +26,6 @@ repositories { mavenCentral() }
 
 dependencies {
 	compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
-	//	compile group: 'com.rabbitmq', name: 'amqp-client', version: rabbitmqVersion
-	//    testCompile group: 'junit', name: 'junit', version: '4.+'
-}
-
-// disables the rabbitmq test compilation
-sourceSets {
-	main {
-		java {
-			srcDir 'src'
-			exclude '**/mq/**'
-		}
-	}
 }
 
 task fatJar(type: OneJar) { mainClass = mainClassName }
