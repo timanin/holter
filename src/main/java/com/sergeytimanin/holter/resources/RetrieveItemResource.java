@@ -48,7 +48,7 @@ public class RetrieveItemResource {
   @Path("/plain")
   @Timed
   @Produces(MediaType.TEXT_PLAIN)
-  public String sayHelloPlain(@QueryParam("service") String service,
+  public String getItemPlain(@QueryParam("service") String service,
       @QueryParam("object") String object, @QueryParam("attribute") String attribute,
       @QueryParam("item") Optional<String> item, @QueryParam("debug") Optional<Boolean> debug)
       throws Exception {
@@ -79,7 +79,7 @@ public class RetrieveItemResource {
   @Path("/json")
   @Timed
   @Produces(MediaType.APPLICATION_JSON)
-  public String sayHelloJson(@QueryParam("name") Optional<String> name) {
+  public String getItemJson(@QueryParam("name") Optional<String> name) {
     final String value = "Hello json! My name is " + name.or("unknown");
     return new String(value);
   }
