@@ -19,6 +19,7 @@ buildscript {
 
 project.ext {
 	dropwizardVersion = '0.7.0'
+    junitVersion = '4.11'
 	mainClassName = 'com.sergeytimanin.holter.HolterApplication'
 }
 
@@ -26,13 +27,10 @@ repositories { mavenCentral() }
 
 dependencies {
 	compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+	testCompile group: 'junit', name: 'junit', version: junitVersion
 }
 
 task fatJar(type: OneJar) { mainClass = mainClassName }
-
-//test {
-//    systemProperties 'property': 'value'
-//}
 
 task wrapper(type: Wrapper) { gradleVersion = '1.12' }
 
