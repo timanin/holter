@@ -14,7 +14,9 @@
 
 package com.sergeytimanin.holter.resources;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
+import com.google.common.base.Splitter;
 import com.codahale.metrics.annotation.Timed;
 
 import javax.ws.rs.GET;
@@ -24,6 +26,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.sergeytimanin.holter.core.*;
@@ -67,6 +72,35 @@ public class RetrieveItemResource {
     } else {
       jmxValue = jmxc.getJmxItem(service, object, attribute, item.get()).toString();
     }
+
+    if (debug.isPresent() && debug.get().equals(true)) {
+      return new String(debugInfo + jmxValue);
+    } else {
+      return new String(jmxValue);
+    }
+  }
+
+  @GET
+  @Path("/plainf")
+  @Timed
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getItemPlainFuzzy(@QueryParam("service") String service,
+      @QueryParam("object") String object, @QueryParam("attribute") String attribute,
+      @QueryParam("item") Optional<String> item, @QueryParam("debug") Optional<Boolean> debug)
+      throws Exception {
+
+    String objectTrimmed = object.substring(0, object.lastIndexOf(","));
+
+    String debugInfo = null;
+    if (debug.isPresent() && debug.get().equals(true)) {
+      debugInfo =
+          " * service: " + service + "\n * object: " + objectTrimmed + "\n * attribute: "
+              + attribute + "\n * item: " + item.or("not set") + "\n * value(s): ";
+    }
+
+    JmxClient jmxc = new JmxClient();
+    String jmxValue = new String();
+    jmxValue = jmxc.getFirstChild(service, objectTrimmed).toString();
 
     if (debug.isPresent() && debug.get().equals(true)) {
       return new String(debugInfo + jmxValue);
