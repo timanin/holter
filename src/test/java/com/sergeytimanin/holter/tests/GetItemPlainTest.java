@@ -12,8 +12,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.sergeytimanin.holter.HolterApplication;
 import com.sergeytimanin.holter.HolterConfiguration;
@@ -35,7 +33,6 @@ public class GetItemPlainTest {
 
   @Test
   public void pingShouldReturnPong() {
-
     try {
       URL myURL = new URL("http://localhost:8082/admin/ping");
       URLConnection myURLConnection = myURL.openConnection();

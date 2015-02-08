@@ -103,20 +103,20 @@ public class JmxClient {
       return exc.getMessage();
     }
   }
-  
+
   public String getFirstChild(String serviceUrl, String objectName) {
     try (JMXConnector jmxc = JMXConnectorFactory.connect(new JMXServiceURL(serviceUrl), null)) {
 
       MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
 
       ObjectName mbeanName = new ObjectName(objectName);
-      
-      String mbeans = mbsc.queryMBeans(mbeanName, null).toString();
 
-      return mbeans;
+      Object[] mbeans = mbsc.queryNames(mbeanName, null).toArray();
+
+      return mbeans[0].toString();
     } catch (Exception exc) {
       logger.error("Exception caught: " + exc.fillInStackTrace());
-      return "error";
+      return exc.getMessage();
     }
   }
 }

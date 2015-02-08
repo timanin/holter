@@ -80,3 +80,15 @@ echo "  > object is not provided"
 curl -s 'http://localhost:8082/holter/getItem/plain?service=service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi&attribute=HeapMemoryUsage'
 
 echo
+
+echo "*** Testing the fuzzy object ***"
+
+echo "  > object is provided and correct"
+curl -s 'http://localhost:8082/holter/getItem/plain?debug=true&service=service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi&object=org.apache.activemq:type=Broker,brokerName=*&attribute=TotalEnqueueCount'
+
+echo
+
+echo "  > object is provided and incorrect"
+curl -s 'http://localhost:8082/holter/getItem/plain?debug=true&service=service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi&object=org.apache.activemq:type=Broker,brokerName=wrong&attribute=TotalEnqueueCount'
+
+echo

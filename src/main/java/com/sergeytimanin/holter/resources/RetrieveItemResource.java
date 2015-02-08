@@ -14,21 +14,15 @@
 
 package com.sergeytimanin.holter.resources;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Optional;
-import com.google.common.base.Splitter;
 import com.codahale.metrics.annotation.Timed;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.sergeytimanin.holter.core.*;
@@ -61,46 +55,24 @@ public class RetrieveItemResource {
     String debugInfo = null;
     if (debug.isPresent() && debug.get().equals(true)) {
       debugInfo =
-          " * service: " + service + "\n * object: " + object + "\n * attribute: " + attribute
-              + "\n * item: " + item.or("not set") + "\n * value(s): ";
-    }
-
-    JmxClient jmxc = new JmxClient();
-    String jmxValue = new String();
-    if (!item.isPresent() || item.get().isEmpty()) {
-      jmxValue = jmxc.getJmxItem(service, object, attribute).toString();
-    } else {
-      jmxValue = jmxc.getJmxItem(service, object, attribute, item.get()).toString();
-    }
-
-    if (debug.isPresent() && debug.get().equals(true)) {
-      return new String(debugInfo + jmxValue);
-    } else {
-      return new String(jmxValue);
-    }
-  }
-
-  @GET
-  @Path("/plainf")
-  @Timed
-  @Produces(MediaType.TEXT_PLAIN)
-  public String getItemPlainFuzzy(@QueryParam("service") String service,
-      @QueryParam("object") String object, @QueryParam("attribute") String attribute,
-      @QueryParam("item") Optional<String> item, @QueryParam("debug") Optional<Boolean> debug)
-      throws Exception {
-
-    String objectTrimmed = object.substring(0, object.lastIndexOf(","));
-
-    String debugInfo = null;
-    if (debug.isPresent() && debug.get().equals(true)) {
-      debugInfo =
-          " * service: " + service + "\n * object: " + objectTrimmed + "\n * attribute: "
+          " * service: " + service + "\n * object: " + object + "\n * attribute: "
               + attribute + "\n * item: " + item.or("not set") + "\n * value(s): ";
     }
 
     JmxClient jmxc = new JmxClient();
+    String actualObject = new String();
+    if (!(object == null) && object.contains("*")) {
+      actualObject = jmxc.getFirstChild(service, object);      
+    } else {
+      actualObject = object;
+    }
+
     String jmxValue = new String();
-    jmxValue = jmxc.getFirstChild(service, objectTrimmed).toString();
+    if (!item.isPresent() || item.get().isEmpty()) {
+      jmxValue = jmxc.getJmxItem(service, actualObject, attribute).toString();
+    } else {
+      jmxValue = jmxc.getJmxItem(service, actualObject, attribute, item.get()).toString();
+    }
 
     if (debug.isPresent() && debug.get().equals(true)) {
       return new String(debugInfo + jmxValue);
